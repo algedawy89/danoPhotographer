@@ -7,7 +7,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <script>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flipdown@0.3.2/dist/flipdown.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flipdown@0.3.2/dist/flipdown.min.js"></script>
+
+ <script>
         tailwind.config = {
             theme: {
                 extend: {
@@ -25,12 +28,17 @@
             }
         }
     </script>
+
+    <script src="jquery.js"></script>
     <style>
+
         * { font-family: 'Cairo', sans-serif; }
         
         /* Enhanced Animated Background */
         .animated-bg {
             background: linear-gradient(-45deg, #c20a72, #764ba2, #040004, #0d0a0a, #4facfe, #0f1b1c);
+            /* background: linear-gradient(-45deg, #F5F3EF, #764ba2, #040004, #FAFAF9, #4facfe, #0f1b1c); */
+
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
         }
@@ -395,21 +403,20 @@ relative overflow-x-hidden">
         </div>
 
         <!-- Contact Buttons -->
-        <div class="grid grid-cols-2 gap-4 mb-8">
-            <a href="https://wa.me/967772980155" class="glass rounded-2xl p-6 text-center smooth-transition hover:scale-105 neon-glow group">
-                <div class="text-4xl mb-3 group-hover:animate-bounce">📱</div>
-                <div class="text-white font-bold">واتساب</div>
-                <div class="text-white/70 text-sm">للتواصل السريع</div>
-            </a>
-            <a href="tel:+967772980155" class="glass rounded-2xl p-6 text-center smooth-transition hover:scale-105 neon-glow group">
-                <div class="text-4xl mb-3 group-hover:animate-bounce">📞</div>
-                <div class="text-white font-bold">اتصال مباشر</div>
-                <div class="text-white/70 text-sm">للحجز الفوري</div>
-            </a>
+        <div id="contact" class="grid grid-cols-2 md:grid-cols-4  gap-7 mb-8">
+            
         </div>
 
+
+
+
+
+
+
+
+
         <!-- Enhanced Gallery Section -->
-        <div class="mb-8">
+        <div class="mb-8 mt-[100px]">
             <h2 class="text-3xl font-bold text-white text-center mb-6 flex items-center justify-center gap-2">
                 <i class="fas fa-camera-retro"></i>
                 معرض الأعمال المتطور
@@ -451,6 +458,16 @@ relative overflow-x-hidden">
             </div>
         </div>
 
+
+<!-- seprator -->
+<div class="flex relative justify-center my-10 items-center">
+        <hr class="w-[95%] h-[5px]  text-white  bg-white/20">
+        <i class="fas text-[18px] absolute top-50 left-50 fa-camera text-white "></i>
+</div>
+<!-- -------- -->
+
+
+
         <!-- Package Offers -->
         <div class="mb-8">
             <h2 class="text-2xl font-bold text-white text-center mb-6 flex items-center justify-center gap-2">
@@ -462,6 +479,27 @@ relative overflow-x-hidden">
             </div>
         </div>
 
+
+
+
+        <!-- try -->
+
+
+<div dir="rtl" class="card-body flex flex-col my-8"  data-text-alignment="">
+<ol id="timeline" dir="rtl" class="relative list-style-none pr-5 border-white/20 rounded-lg-3 border-y-2 " style="border-right: 2px solid #fff !important;"></ol>
+           
+</div>
+
+
+<div class="w-full relative flex flex-row-reverse justify-center my-9 items-center">
+    <div class="w-[10px]     md:w-[320px]   h-full"></div>
+    <div id="flipdown" class="flipdown left-50 w-full"></div>
+</div>
+
+
+<!-- ------------- -->
+
+
         <!-- Booking Button -->
         <div class="mb-8">
             <button onclick="openBookingModal()" class="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/80 hover:to-accent/80 text-white font-bold py-6 rounded-2xl smooth-transition hover:scale-105 neon-glow text-lg">
@@ -470,8 +508,11 @@ relative overflow-x-hidden">
             </button>
         </div>
 
+
+
+
         <!-- Social Links -->
-        <div class="grid grid-cols-2 gap-4 mb-8">
+        <!-- <div class="grid grid-cols-2 gap-4 mb-8">
             <a href="https://www.instagram.com/dano.photographe/" class="glass rounded-2xl p-4 text-center smooth-transition hover:scale-105 hover:neon-glow">
                 <i class="fab fa-instagram text-3xl text-pink-400 mb-2"></i>
                 <div class="text-white font-semibold">Instagram</div>
@@ -480,7 +521,7 @@ relative overflow-x-hidden">
                 <i class="fab fa-facebook text-3xl text-blue-400 mb-2"></i>
                 <div class="text-white font-semibold">Facebook</div>
             </a>
-        </div>
+        </div> -->
 
         <!-- Footer -->
         <footer class="text-center">
@@ -501,13 +542,13 @@ relative overflow-x-hidden">
             <button class="lightbox-close" onclick="closeLightbox()">
                 <i class="fas fa-times"></i>
             </button>
-            <button class="lightbox-nav lightbox-prev" onclick="prevImage()">
+            <button class="lightbox-nav  bg-gray-900/20 left-5 lightbox-prev" onclick="prevImage()">
                 <i class="fas fa-chevron-left"></i>
             </button>
-            <button class="lightbox-nav lightbox-next" onclick="nextImage()">
+            <button class="lightbox-nav  bg-gray-900/20 right-5 lightbox-next" onclick="nextImage()">
                 <i class="fas fa-chevron-right"></i>
             </button>
-            <img id="lightboxImage" src="" alt="">
+            <img id="lightboxImage" class="object-contain" src="" alt="">
             <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center">
                 <h3 id="lightboxTitle" class="text-white text-xl font-bold mb-2"></h3>
                 <p id="lightboxDescription" class="text-white/80"></p>
@@ -560,7 +601,159 @@ relative overflow-x-hidden">
         </div>
     </div>
 
+
+<script>
+
+$(document).ready(function () {
+    
+
+
+const contatcs=[
+    {
+        url:"https://wa.me/967772980155",
+        title:"Whatsapp",
+        description:"للتواصل عبر الواتس اب",
+        text:`<i class="fab fa-whatsapp text-green-300"></i>`,
+        color:"green-300",
+        bg:"bg-white"
+    },
+
+     {
+        url:"tel:+967772980155",
+        title:"Phone",
+        description:"للتواصل المباشر",
+        text:`<i class="fa fa-phone text-blue-200 hover:text-white"></i>`,
+        color:"blue-200",
+        bg:"bg-white"
+    },
+
+    {
+        url:"https://www.instagram.com/dano.photographe/",
+        title:"Instagram",
+        description:"للتواصل عبر انستغرام",
+        text:`<i class="fab fa-instagram text-pink-400"></i>`,
+        color:"green-300",
+        bg:"bg-white"
+    },
+
+
+     {
+        url:"https://www.facebook.com/share/1Czs75FHrp/",
+        title:"Facebook",
+        description:"للتواصل عبر فيس بوك",
+        text:`<i class="fab fa-facebook text-blue-400"></i>`
+    },
+]
+
+
+// const contact= document.getElementById("contact");
+
+
+contatcs.forEach((item=>{
+    $("#contact").append(genrate_contact(item))
+    // contact.appendChild(genrate_contact(item));
+}))
+
+function genrate_contact(item){
+
+    return `<a href="${item.url}" class="glass rounded-2xl p-6 text-center smooth-transition ${item.addtionalclass} hover:${item.color} hover:scale-105 neon-glow group">
+                <div class="text-4xl mb-3 group-hover:animate-bounce">${item.text}</div>
+                <div class="text-white font-bold hover:${item.color}">${item.title}</div>
+                <div class="text-white/70 text-sm hover:${item.color}">${item.description}</div>
+            </a>
+            `;
+
+}
+
+
+
+
+});
+
+</script>
+
+
+
+
+
+
     <script>
+
+
+
+
+ const targetDate = new Date(2026, 1, 8); // شهر 1 هو فبراير
+  const targetTimestamp = Math.floor(targetDate.getTime() / 1000);
+
+  // إنشاء العد التنازلي
+  new FlipDown(targetTimestamp,{
+    theme:"light"
+  })
+    .start()
+    .ifEnded(() => {
+      console.log("انتهى الوقت!");
+    });
+
+
+
+
+
+const timelineItems = [
+  {
+    date: "1",
+    title: "سياسة الدفع والحجز",
+    description: "عربون لتثبيت الحجز وتصقية المبلغ قبل المناسبه بيوم او فور الوصول",
+    dateColor: "#ffffff",
+    titleColor: "#ffffff",
+    descColor: "#fff"
+  },
+  {
+    date: "2",
+    title: "مدة الارشيف",
+    description: "نحتفظ بالمواد لمدة اسبوع الى اسبوعين من بعد المناسبة",
+    dateColor: "#fff",
+    titleColor: "#ffffff",
+    descColor: "#fff"
+  },
+  {
+    date: "3",
+    title: "مدة التسليم",
+    description: "من شهر الى شهر ونصف بعد المناسبه",
+    dateColor: "#fff",
+    titleColor: "#ffffff",
+    descColor: "#ffffff"
+  },
+  {
+    date: "4",
+    title: "My birthday",
+    description: "2026. 2. 8",
+    dateColor: "#ffffff",
+    titleColor: "#ffffff",
+    descColor: "#fff"
+  }
+];
+
+
+
+
+
+
+const timeline = document.getElementById("timeline");
+
+timelineItems.forEach((item) => {
+  const li = document.createElement("li");
+  li.className = "mb-4 ml-3 flex flex-col";
+  li.innerHTML = `
+    <div class="absolute rounded-lg" style="width: .75rem; height: .75rem; right: -0.45rem; background: #fff;"></div>
+    <time class="mb-1 small" style="color: ${item.dateColor};">${item.date}</time>
+    <span class="text-white font-bold" >${item.title}</span>
+    <p class="text-white/90">${item.description}</p>
+  `;
+  timeline.appendChild(li);
+});
+
+
+
         // Data from PHP converted to JavaScript
         const images = [
             {
