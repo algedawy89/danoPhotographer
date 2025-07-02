@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دانو  للتصوير - Portfolio Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#f59e0b',
+                        accent: '#ec4899',
+                        dark: '#1e1b4b',
+                        cream: '#fef7ed'
+                    },
+                    fontFamily: {
+                        'arabic': ['Cairo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { font-family: 'Cairo', sans-serif; }
+        
+        /* Enhanced Animated Background */
+        .animated-bg {
+            background: linear-gradient(-45deg, #c20a72, #764ba2, #040004, #0d0a0a, #4facfe, #0f1b1c);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Enhanced Floating particles */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-30px) rotate(120deg); }
+            66% { transform: translateY(-60px) rotate(240deg); }
+        }
+        
+        /* Glass morphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            /* box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1); */
+            box-shadow: 0 25px 45px rgba(236, 51, 51, 0.1);
+
+        }
+        
+        /* Neon glow effect */
+        .neon-glow {
+            box-shadow: 0 0 10px rgba(224, 4, 140, 0.16),
+                       0 0 5px rgba(217, 177, 199, 0.3),
+                       0 0 3px rgba(244, 244, 247, 0.2);
+        }
+        
+        /* Enhanced Gallery Styles */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        /* Lightbox Styles */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+        }
+        
+        .lightbox img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .lightbox-prev { left: -70px; }
+        .lightbox-next { right: -70px; }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+        
+        /* Filter Buttons */
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0.25rem;
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(45deg, #6366f1, #ec4899);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        }
+        
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* View Toggle */
+        .view-toggle {
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 0.25rem;
+        }
+        
+        .view-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .view-btn.active {
+            background: linear-gradient(45deg, #6366f1, #ec4899);
+        }
+        
+        /* List View */
+        .gallery-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .gallery-list .gallery-item {
+            display: flex;
+            height: 150px;
+        }
+        
+        .gallery-list .gallery-item img {
+            width: 200px;
+            height: 150px;
+            flex-shrink: 0;
+        }
+        
+        .gallery-list .gallery-info {
+            flex: 1;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Smooth transitions */
+        .smooth-transition {
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        /* Card hover effects */
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+        
+        .card-3d:hover {
+            transform: rotateY(5deg) rotateX(5deg);
+        }
+        
+        /* Toggle animation */
+        .toggle-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        
+        .toggle-content.active {
+            max-height: 1000px;
+        }
+        
+        /* Modal animations */
+        .modal-backdrop {
+            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-scale {
+            transform: scale(0.7);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal-scale.show {
+            transform: scale(1);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                padding: 0.5rem;
+            }
+            
+            .gallery-list .gallery-item {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .gallery-list .gallery-item img {
+                width: 100%;
+                height: 200px;
+            }
+            
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            
+            .lightbox-prev { left: -50px; }
+            .lightbox-next { right: -50px; }
+        }
+    </style>
+</head>
+<body class="animated-bg min-h-screen
+relative overflow-x-hidden">
+
+<!-- <video src="da.mp4" loop class="absolute object-cover opacity-[0.3] w-full h-full" autoplay ></video> -->
+    <!-- Floating Particles -->
+    <div class="fixed inset-0 pointer-events-none">
+        <div class="particle w-4 h-4 bg-white top-10 left-10" style="animation-delay: 0s;"></div>
+        <div class="particle w-6 h-6 bg-primary top-20 right-20" style="animation-delay: 1s;"></div>
+        <div class="particle w-3 h-3 bg-accent top-40 left-1/4" style="animation-delay: 2s;"></div>
+        <div class="particle w-5 h-5 bg-secondary top-60 right-1/3" style="animation-delay: 3s;"></div>
+        <div class="particle w-4 h-4 bg-white bottom-20 left-1/3" style="animation-delay: 4s;"></div>
+        <div class="particle w-6 h-6 bg-primary bottom-40 right-10" style="animation-delay: 5s;"></div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8 max-w-6xl relative z-10">
+        <!-- Header with Profile -->
+        <div class="text-center mb-8">
+            <div class="relative inline-block mb-6">
+                <div class="relative w-40 h-40 mx-auto rounded-full overflow-hidden glass neon-glow group">
+                    <img src="images/proflie2.jpg" alt="دانو " class="w-full h-full object-cover group-hover:scale-110 smooth-transition">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm font-bold">
+                        دانو 
+                    </div>
+                </div>
+            </div>
+
+            <h1 class="text-4xl font-black text-white mb-2 tracking-wide">
+                <div class="text-lg font-normal text-white/80 mt-1">Dano Photography Studio</div>
+            </h1>
+            
+            <h3 class="text-sm mb-6 font-normal text-white/80">دانو  للتصوير</h3>
+            
+            <div class="inline-flex items-center gap-2 glass rounded-full px-6 py-3 neon-glow">
+                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                <span class="text-white font-semibold">🇾🇪 إب - اليمن</span>
+            </div>
+        </div>
+
+        <!-- Contact Buttons -->
+        <div class="grid grid-cols-2 gap-4 mb-8">
+            <a href="https://wa.me/967772980155" class="glass rounded-2xl p-6 text-center smooth-transition hover:scale-105 neon-glow group">
+                <div class="text-4xl mb-3 group-hover:animate-bounce">📱</div>
+                <div class="text-white font-bold">واتساب</div>
+                <div class="text-white/70 text-sm">للتواصل السريع</div>
+            </a>
+            <a href="tel:+967772980155" class="glass rounded-2xl p-6 text-center smooth-transition hover:scale-105 neon-glow group">
+                <div class="text-4xl mb-3 group-hover:animate-bounce">📞</div>
+                <div class="text-white font-bold">اتصال مباشر</div>
+                <div class="text-white/70 text-sm">للحجز الفوري</div>
+            </a>
+        </div>
+
+        <!-- Enhanced Gallery Section -->
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-white text-center mb-6 flex items-center justify-center gap-2">
+                <i class="fas fa-camera-retro"></i>
+                معرض الأعمال المتطور
+            </h2>
+            
+            <!-- Gallery Controls -->
+            <div class="flex flex-wrap justify-between items-center mb-6 gap-4">
+                <!-- Category Filters -->
+                <div class="flex flex-wrap">
+                    <button class="filter-btn active" data-filter="all">جميع الأعمال</button>
+                    <button class="filter-btn" data-filter="portraits">بورتريه</button>
+                    <button class="filter-btn" data-filter="weddings">أفراح</button>
+                    <button class="filter-btn" data-filter="events">مناسبات</button>
+                    <button class="filter-btn" data-filter="nature">طبيعة</button>
+                </div>
+                
+                <!-- View Toggle -->
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="grid">
+                        <i class="fas fa-th"></i>
+                    </button>
+                    <button class="view-btn" data-view="list">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Gallery Grid -->
+            <div id="galleryContainer" class="gallery-grid">
+                <!-- Gallery items will be populated by JavaScript -->
+            </div>
+            
+            <!-- Load More Button -->
+            <div class="text-center mt-8">
+                <button id="loadMoreBtn" class="glass rounded-full px-8 py-3 text-white font-bold hover:scale-105 smooth-transition neon-glow">
+                    <span class="load-text">تحميل المزيد</span>
+                    <span class="loading hidden"></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Package Offers -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-white text-center mb-6 flex items-center justify-center gap-2">
+                <i class="fas fa-star"></i>
+                عروض التصوير
+            </h2>
+            <div class="space-y-4" id="packagesContainer">
+                <!-- Packages will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Booking Button -->
+        <div class="mb-8">
+            <button onclick="openBookingModal()" class="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/80 hover:to-accent/80 text-white font-bold py-6 rounded-2xl smooth-transition hover:scale-105 neon-glow text-lg">
+                <i class="fas fa-calendar-alt mr-2"></i>
+                احجز موعدك الآن
+            </button>
+        </div>
+
+        <!-- Social Links -->
+        <div class="grid grid-cols-2 gap-4 mb-8">
+            <a href="https://www.instagram.com/dano.photographe/" class="glass rounded-2xl p-4 text-center smooth-transition hover:scale-105 hover:neon-glow">
+                <i class="fab fa-instagram text-3xl text-pink-400 mb-2"></i>
+                <div class="text-white font-semibold">Instagram</div>
+            </a>
+            <a href="https://www.facebook.com/share/1Czs75FHrp/" class="glass rounded-2xl p-4 text-center smooth-transition hover:scale-105 hover:neon-glow">
+                <i class="fab fa-facebook text-3xl text-blue-400 mb-2"></i>
+                <div class="text-white font-semibold">Facebook</div>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center">
+            <div class="glass rounded-2xl p-6 neon-glow">
+                <p class="text-white/90 mb-2">
+                    <i class="fas fa-heart text-red-400 animate-pulse"></i>
+                    صلي على نبينا محمد وآله
+                    <i class="fas fa-heart text-red-400 animate-pulse"></i>
+                </p>
+                <p class="text-white/70 text-sm">© 2025 دانو  للتصوير - جميع الحقوق محفوظة</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Enhanced Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="closeLightbox()">
+                <i class="fas fa-times"></i>
+            </button>
+            <button class="lightbox-nav lightbox-prev" onclick="prevImage()">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="lightbox-nav lightbox-next" onclick="nextImage()">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <img id="lightboxImage" src="" alt="">
+            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center">
+                <h3 id="lightboxTitle" class="text-white text-xl font-bold mb-2"></h3>
+                <p id="lightboxDescription" class="text-white/80"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="fixed inset-0 modal-backdrop hidden z-50 flex items-center justify-center p-4">
+        <div class="modal-scale glass rounded-3xl p-8 max-w-md w-full neon-glow">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-calendar-check text-white text-2xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-white">احجز موعدك</h2>
+                <p class="text-white/80">املأ البيانات وسنتواصل معك قريباً</p>
+            </div>
+            
+            <form id="bookingForm" class="space-y-4">
+                <div>
+                    <input type="text" placeholder="الاسم الكامل" required class="w-full px-4 py-4 rounded-xl bg-white/20 glass border border-white/30 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-primary text-base">
+                </div>
+                <div>
+                    <input type="tel" placeholder="رقم الهاتف" required class="w-full px-4 py-4 rounded-xl bg-white/20 glass border border-white/30 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-primary text-base">
+                </div>
+                <div>
+                    <input type="date" required class="w-full px-4 py-4 rounded-xl bg-white/20 glass border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-primary text-base">
+                </div>
+                <div>
+                    <select required class="w-full px-4 py-4 rounded-xl bg-white/20 glass border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-primary text-base">
+                        <option value="" class="bg-gray-800">اختر العرض</option>
+                        <option value="offer1" class="bg-gray-800">العرض الأول - 55 ألف</option>
+                        <option value="offer2" class="bg-gray-800">العرض الثاني - 65 ألف</option>
+                        <option value="offer3" class="bg-gray-800">العرض الثالث - 80 ألف</option>
+                        <option value="vip" class="bg-gray-800">العرض VIP - 250 ألف</option>
+                    </select>
+                </div>
+                <div>
+                    <textarea placeholder="تفاصيل المناسبة..." rows="3" required class="w-full px-4 py-4 rounded-xl bg-white/20 glass border border-white/30 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-primary text-base resize-none"></textarea>
+                </div>
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeBookingModal()" class="flex-1 bg-white/20 hover:bg-white/30 text-white font-bold py-4 rounded-xl smooth-transition">
+                        إلغاء
+                    </button>
+                    <button type="submit" class="flex-1 bg-gradient-to-r from-primary to-accent hover:from-primary/80 hover:to-accent/80 text-white font-bold py-4 rounded-xl smooth-transition">
+                        إرسال الطلب
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Data from PHP converted to JavaScript
+        const images = [
+            {
+                id: 1,
+                title: "لحظات جميلة",
+                src: "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=600&fit=crop",
+                description: "تصوير بورتريه احترافي",
+                category: "portraits"
+            },
+            {
+                id: 2,
+                title: "أفراح سعيدة",
+                src: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&h=600&fit=crop",
+                description: "تصوير حفلات الزفاف",
+                category: "weddings"
+            },
+            {
+                id: 3,
+                title: "مناسبات خاصة",
+                src: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&h=600&fit=crop",
+                description: "تصوير المناسبات المختلفة",
+                category: "events"
+            },
+            {
+                id: 4,
+                title: "جمال الطبيعة",
+                src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop",
+                description: "تصوير المناظر الطبيعية",
+                category: "nature"
+            },
+            {
+                id: 5,
+                title: "لحظات تخرج",
+                src: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&h=600&fit=crop",
+                description: "تصوير حفلات التخرج",
+                category: "events"
+            },
+            {
+                id: 6,
+                title: "بورتريه فني",
+                src: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=800&h=600&fit=crop",
+                description: "تصوير شخصي احترافي",
+                category: "portraits"
+            },
+            {
+                id: 7,
+                title: "زفاف أحلام",
+                src: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&h=600&fit=crop",
+                description: "تصوير ليلة الزفاف",
+                category: "weddings"
+            },
+            {
+                id: 8,
+                title: "غروب ساحر",
+                src: "https://images.unsplash.com/photo-1516715094483-75da06c83ac1?w=800&h=600&fit=crop",
+                description: "تصوير غروب الشمس",
+                category: "nature"
+            }
+        ];
+
+        const packages = [
+            {
+                title: "العرض الأول",
+                price: "55 ألف",
+                badge: "",
+                color: "secondary",
+                description: "عرض اقتصادي مميز",
+                items: [
+                    {icon: "check-circle", color: "green-400", text: "تصوير صور فوتو محدودة بجودة عالية"},
+                    {icon: "video", color: "blue-400", text: "تصوير 2 فيديوهات احترافية"},
+                    {icon: "memory", color: "purple-400", text: "ذاكرة 16 جيجا مع جميع الملفات"},
+                    {icon: "print", color: "orange-400", text: "طباعة 15 صورة مقاس A5"},
+                    {icon: "clock", color: "yellow-400", text: "الحضور من 4:00 إلى 7:00"}
+                ]
+            },
+            {
+                title: "العرض الثاني",
+                price: "65 ألف",
+                badge: "",
+                color: "primary",
+                description: "الخيار الأمثل للعرائس",
+                items: [
+                    {icon: "camera", color: "green-400", text: "تصوير صور فوتو بجودة عالية"},
+                    {icon: "film", color: "blue-400", text: "تصوير 3 فيديوهات + فيديو اختياري"},
+                    {icon: "image", color: "purple-400", text: "طباعة 20 صورة A5 + صورة A4"},
+                    {icon: "clock", color: "yellow-400", text: "الحضور من 3:30 إلى 8:00"}
+                ]
+            },
+            {
+                title: "العرض الثالث",
+                price: "80 ألف",
+                badge: "",
+                color: "primary",
+                description: "الخيار الأمثل للتخرج",
+                items: [
+                    {icon: "camera", color: "green-400", text: "تصوير صور فوتو بجودة عالية"},
+                    {icon: "film", color: "blue-400", text: "تصوير 3 فيديوهات + فيديو اختياري"},
+                    {icon: "image", color: "purple-400", text: "طباعة 40 صورة A5 + صورة A4"},
+                    {icon: "clock", color: "yellow-400", text: "الحضور من 1:30 إلى 8:00"}
+                ]
+            },
+            {
+                title: "العرض VIP",
+                price: "250 ألف",
+                badge: "VIP",
+                color: "accent",
+                description: "الخيار الفاخر مع التصوير الجوي",
+                items: [
+                    {icon: "helicopter", color: "red-400", text: "تصوير جوي بالدرون احترافي"},
+                    {icon: "book", color: "green-400", text: "البومين مخمل مصمم بالأسماء"},
+                    {icon: "users", color: "blue-400", text: "فريق تصوير متكامل"},
+                    {icon: "tv", color: "purple-400", text: "شاشتين عرض للقاعة"},
+                    {icon: "clock", color: "yellow-400", text: "الحضور من 11:00 إلى 9:00"}
+                ]
+            }
+        ];
+
+        // Gallery state
+        let currentFilter = 'all';
+        let currentView = 'grid';
+        let currentLightboxIndex = 0;
+        let visibleImages = 6;
+        let filteredImages = images;
+
+        // Initialize the application
+        function init() {
+            renderGallery();
+            renderPackages();
+            setupEventListeners();
+        }
+
+        // Render gallery
+        function renderGallery() {
+            const container = document.getElementById('galleryContainer');
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            
+            // Filter images
+            filteredImages = currentFilter === 'all' 
+                ? images 
+                : images.filter(img => img.category === currentFilter);
+            
+            // Clear container
+            container.innerHTML = '';
+            
+            // Set view class
+            container.className = currentView === 'grid' ? 'gallery-grid' : 'gallery-list';
+            
+            // Render visible images
+            const imagesToShow = filteredImages.slice(0, visibleImages);
+            
+            imagesToShow.forEach((image, index) => {
+                const item = createGalleryItem(image, index);
+                container.appendChild(item);
+            });
+            
+            // Show/hide load more button
+            loadMoreBtn.style.display = visibleImages >= filteredImages.length ? 'none' : 'block';
+        }
+
+        // Create gallery item
+        function createGalleryItem(image, index) {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.onclick = () => openLightbox(index);
+            
+            if (currentView === 'grid') {
+                item.innerHTML = `
+                    <img src="${image.src}" alt="${image.title}" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h3 class="text-white text-lg font-bold">${image.title}</h3>
+                        <p class="text-white/80 text-sm">${image.description}</p>
+                        <div class="flex gap-2 mt-2">
+                            <span class="bg-primary/50 text-white px-2 py-1 rounded-full text-xs">${getCategoryName(image.category)}</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                item.innerHTML = `
+                    <img src="${image.src}" alt="${image.title}" loading="lazy">
+                    <div class="gallery-info">
+                        <h3 class="text-white text-lg font-bold mb-2">${image.title}</h3>
+                        <p class="text-white/80 text-sm mb-2">${image.description}</p>
+                        <span class="bg-primary/50 text-white px-2 py-1 rounded-full text-xs">${getCategoryName(image.category)}</span>
+                    </div>
+                `;
+            }
+            
+            return item;
+        }
+
+        // Get category name in Arabic
+        function getCategoryName(category) {
+            const names = {
+                'portraits': 'بورتريه',
+                'weddings': 'أفراح',
+                'events': 'مناسبات',
+                'nature': 'طبيعة'
+            };
+            return names[category] || category;
+        }
+
+        // Render packages
+        function renderPackages() {
+            const container = document.getElementById('packagesContainer');
+            container.innerHTML = '';
+            
+            packages.forEach((package, index) => {
+                const packageEl = createPackageElement(package, index);
+                container.appendChild(packageEl);
+            });
+        }
+
+        // Create package element
+        function createPackageElement(package, index) {
+            const div = document.createElement('div');
+            div.className = 'relative glass rounded-2xl overflow-hidden neon-glow card-3d';
+            
+            const badgeHtml = package.badge ? `
+                <div class="absolute top-0 right-0 bg-gradient-to-l from-${package.color} to-secondary text-white px-4 py-2 rounded-bl-2xl text-sm font-bold">
+                    <i class="fas fa-crown mr-1"></i>${package.badge}
+                </div>
+            ` : '';
+            
+            div.innerHTML = `
+                ${badgeHtml}
+                <button onclick="togglePackage(${index + 1})" class="w-full p-6 text-right flex justify-between items-center hover:bg-white/10 smooth-transition ${package.badge ? 'pt-12' : ''}">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">${package.title}</h3>
+                        <p class="text-white/80">${package.description}</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="bg-${package.color} text-white px-4 py-2 rounded-full font-bold">${package.price}</span>
+                        <i class="fas fa-chevron-down text-white toggle-icon-${index + 1} smooth-transition"></i>
+                    </div>
+                </button>
+                <div class="toggle-content px-6 pb-6" id="package-${index + 1}">
+                    <div class="space-y-3">
+                        ${package.items.map(item => `
+                            <div class="flex items-center gap-3 text-white/90">
+                                <i class="fas fa-${item.icon} text-${item.color}"></i>
+                                <span>${item.text}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            return div;
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.filter;
+                    visibleImages = 6;
+                    renderGallery();
+                });
+            });
+            
+            // View toggle
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentView = btn.dataset.view;
+                    renderGallery();
+                });
+            });
+            
+            // Load more button
+            document.getElementById('loadMoreBtn').addEventListener('click', loadMoreImages);
+            
+            // Keyboard navigation for lightbox
+            document.addEventListener('keydown', (e) => {
+                if (document.getElementById('lightbox').classList.contains('active')) {
+                    if (e.key === 'Escape') closeLightbox();
+                    if (e.key === 'ArrowLeft') nextImage();
+                    if (e.key === 'ArrowRight') prevImage();
+                }
+            });
+        }
+
+        // Load more images
+        function loadMoreImages() {
+            const btn = document.getElementById('loadMoreBtn');
+            const loadText = btn.querySelector('.load-text');
+            const loading = btn.querySelector('.loading');
+            
+            loadText.classList.add('hidden');
+            loading.classList.remove('hidden');
+            
+            setTimeout(() => {
+                visibleImages += 6;
+                renderGallery();
+                loadText.classList.remove('hidden');
+                loading.classList.add('hidden');
+            }, 1000);
+        }
+
+        // Lightbox functions
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            const lightbox = document.getElementById('lightbox');
+            const image = document.getElementById('lightboxImage');
+            const title = document.getElementById('lightboxTitle');
+            const description = document.getElementById('lightboxDescription');
+            
+            const currentImage = filteredImages[index];
+            image.src = currentImage.src;
+            title.textContent = currentImage.title;
+            description.textContent = currentImage.description;
+            
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function nextImage() {
+            currentLightboxIndex = (currentLightboxIndex + 1) % filteredImages.length;
+            updateLightboxImage();
+        }
+
+        function prevImage() {
+            currentLightboxIndex = (currentLightboxIndex - 1 + filteredImages.length) % filteredImages.length;
+            updateLightboxImage();
+        }
+
+        function updateLightboxImage() {
+            const image = document.getElementById('lightboxImage');
+            const title = document.getElementById('lightboxTitle');
+            const description = document.getElementById('lightboxDescription');
+            
+            const currentImage = filteredImages[currentLightboxIndex];
+            image.src = currentImage.src;
+            title.textContent = currentImage.title;
+            description.textContent = currentImage.description;
+        }
+
+        // Toggle packages
+        function togglePackage(packageNum) {
+            const content = document.getElementById(`package-${packageNum}`);
+            const icon = document.querySelector(`.toggle-icon-${packageNum}`);
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                // Close all other packages
+                for (let i = 1; i <= packages.length; i++) {
+                    if (i !== packageNum) {
+                        const otherContent = document.getElementById(`package-${i}`);
+                        const otherIcon = document.querySelector(`.toggle-icon-${i}`);
+                        if (otherContent) otherContent.classList.remove('active');
+                        if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+                    }
+                }
+                
+                content.classList.add('active');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Modal functions
+        function openBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            const modalContent = modal.querySelector('.modal-scale');
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.classList.add('show');
+            }, 10);
+        }
+
+        function closeBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            const modalContent = modal.querySelector('.modal-scale');
+            
+            modalContent.classList.remove('show');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Form submission
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
+            
+            submitButton.textContent = 'جاري الإرسال...';
+            submitButton.disabled = true;
+            
+            setTimeout(() => {
+                submitButton.textContent = 'تم الإرسال بنجاح ✅';
+                submitButton.className = submitButton.className.replace('from-primary to-accent', 'from-green-500 to-green-600');
+                
+                setTimeout(() => {
+                    closeBookingModal();
+                    submitButton.textContent = originalText;
+                    submitButton.disabled = false;
+                    submitButton.className = submitButton.className.replace('from-green-500 to-green-600', 'from-primary to-accent');
+                    this.reset();
+                }, 2000);
+            }, 1500);
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('bookingModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeBookingModal();
+            }
+        });
+
+        // Dark mode support
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // Initialize the app
+        init();
+    </script>
+</body>
+</html>
