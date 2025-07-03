@@ -1,9 +1,16 @@
 $(document).ready(function () {
+
+  // location.href="maintance.html";
+
+
   let nav = $("#nav");
   let about = $("#about");
   let footer = $("#footer");
+
 //   let imgcarosul = $("#imgcarosul");
   
+
+
 
 
 
@@ -64,7 +71,7 @@ $(document).ready(function () {
     });
   }
 
-
+Pause();
 
   $(document).on('click','#menuBtn',function(){
     
@@ -107,6 +114,39 @@ $(document).ready(function () {
   }
 
 
+
+  function Pause(){
+
+  let body = $("body");
+
+    
+
+  if (body.length > 0) {
+  $.ajax({
+    type: "GET",
+    url: "min.html",
+    dataType: "html",
+    success: function (response) {
+      // إعادة تعيين الكلاسات
+      body.removeAttr("class").addClass("flex items-center justify-center min-h-screen px-4 text-white");
+
+      // تعديل الخلفية والخط
+      body.css({
+        background: `url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed`,
+        backgroundSize: "cover",
+        fontFamily: `"Tajawal", sans-serif`
+      });
+
+      // إدخال محتوى الصفحة
+      body.html(response);
+    },
+    error: function (xhr, status, error) {
+      console.error("حدث خطأ أثناء تحميل الصفحة:", error);
+    }
+  });
+}
+
+  }
   
 
 
