@@ -1,0 +1,57 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16 items-center">
+      <!-- Logo -->
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex space-x-4 space-x-reverse">
+        <a href="index.html" class="text-white-700 hover:text-pink-600">الرئيسية</a>
+        <a href="gallery.html" class="text-white-700 hover:text-pink-600">المعرض</a>
+        <a href="index.html#contact"   onclick="handleSectionLink(event, 'contact')" class="text-white-700 hover:text-pink-600">اتصل بنا</a>
+        <a href="index.html#offers"   onclick="handleSectionLink(event, 'offers')" class="text-white-700 hover:text-pink-600">العروض</a>
+      </div>
+
+      <div class="flex-shrink-0 py-2 h-[70px]  text-xl font-bold text-pink-600">
+      <img class="w-full scale-150 rounded-lg h-full" src="images/oz.png" alt="">
+      </div>
+
+      
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden">
+        <button id="menuBtn" class="text-white-700 text-2xl focus:outline-none">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="md:hidden hidden px-4 pb-4">
+    <div class="flex flex-col gab-3 space-y-5  p-5 justify-center items-center"> 
+<a href="index.html" class="text-white-700 hover:text-pink-600">الرئيسية</a>
+        <a href="gallery.html" class="text-white-700 hover:text-pink-600">المعرض</a>
+        <a href="index.html#contact"  onclick="handleSectionLink(event, 'contact')" class="text-white-700 hover:text-pink-600">اتصل بنا</a>
+        <a href="index.html#offers"   onclick="handleSectionLink(event, 'offers')" class="text-white-700 hover:text-pink-600">العروض</a>
+    </div>
+        
+  </div>
+
+
+  <!-- 
+
+  .filter-btn.active {
+    /* background: linear-gradient(45deg, #6366f1, #ec4899); */
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+    border: 1px solid #e8183c;
+}
+
+.filter-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 2px 1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0.25rem;
+}
+  -->

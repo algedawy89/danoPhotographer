@@ -68,6 +68,68 @@
 
 
 
+$(document).ready(function(){
+
+    let $imgcont= $("#imagescont");
+    let $imageTrack=$("#carouselTrack");
+    let $indicator=$("#carousel_indicatior")
+    if($imgcont!=null ||$imgcont!="undefiend"){
+
+        images.forEach((img,index)=>{
+            let imgfor=`<div class="swiper-slide w-full h-full bg-black/40 relative"><span class="absolute text-white bg-gray-900/40 rounded-lg px-4 py-2 bottom-10  left-[50%]">(${images.length}/${index+1})</span><img class="w-full h-full object-contain" src="${img.src}" alt="${img.title}" /></div>`
+            $imgcont.append(imgfor);
+        })
+
+    }
+
+    if($imageTrack.length>0){
+        images.forEach((img,index)=>{
+            $imageTrack.append(genrateCarousel(img));
+            $indicator.append(genrateindicator(index));
+        })
+    }
+
+
+});
+
+
+
+
+        // Carousel functionality
+        let currentSlide = 0;
+        const totalSlides = images.length;
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        }
+        
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        }
+        
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+        
+        function updateCarousel() {
+            const track = document.getElementById('carouselTrack');
+            track.style.transform = `translateX(${currentSlide * 100}%)`;
+            
+            // Update indicators
+            document.querySelectorAll('.carousel-indicator').forEach((indicator, index) => {
+                indicator.className = `carousel-indicator w-3 h-3 rounded-full ${
+                    index === currentSlide ? 'bg-white' : 'bg-white/50'
+                }`;
+            });
+        }
+        
+        // Auto-advance carousel
+        setInterval(nextSlide, 5000);
+        
+   
 
             // Render gallery
          window.renderGallery=()=> {
@@ -97,6 +159,31 @@
             loadMoreBtn.style.display = visibleImages >= filteredImages.length ? 'none' : 'block';
         }
 
+
+      function genrateindicator(id){
+        return `
+        <button
+        onclick="goToSlide(${id})"
+        class="carousel-indicator w-3 h-3 rounded-full bg-white/50"></button>
+
+        `
+      }
+
+  function genrateCarousel(img) {
+    return `
+     <div class="carousel-slide min-w-full relative rounded-lg  p-4">
+                        <img src="${img.src}" alt="${img.title}" class="w-full rounded-lg h-[400px]  object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                            <div class="p-4 text-white">
+                                <h3 class="font-bold">${img.title}</h3>
+                                <p class="text-sm opacity-80">${img.description||""}</p>
+                            </div>
+                        </div>
+</div>
+    
+    `;
+  }
+
         // Create gallery item
         function createGalleryItem(image, index) {
             const item = document.createElement('div');
@@ -108,7 +195,7 @@
                     <img src="${image.src}" class=" w-full h-full object-fit " alt="${image.title}" loading="lazy">
                     <div class="gallery-overlay">
                         <h3 class="text-white text-lg font-bold">${image.title}</h3>
-                        <p class="text-white/80 text-sm">${image.description}</p>
+                        <p class="text-white/80 text-sm">${image.description||"untitled"}</p>
                         <div class="flex gap-2 mt-2">
                             <span class="bg-primary/50 text-white px-2 py-1 rounded-full text-xs">${getCategoryName(image.category)}</span>
                         </div>

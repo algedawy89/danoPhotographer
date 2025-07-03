@@ -108,10 +108,10 @@
       }
 
       /* Neon glow effect */
-      .neon-glow {
+      /* .neon-glow {
         box-shadow: 0 0 10px rgba(224, 4, 140, 0.16),
           0 0 5px rgba(217, 177, 199, 0.3), 0 0 3px rgba(244, 244, 247, 0.2);
-      }
+      } */
 
       /* Enhanced Gallery Styles */
       .gallery-grid {
@@ -146,6 +146,17 @@
       .gallery-item:hover img {
         transform: scale(1.1);
       }
+
+.highlighted-section {
+  transform: scale(1.05);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  transition: all 0.5s ease-in-out;
+}
 
       .gallery-overlay {
         position: absolute;
@@ -412,6 +423,12 @@
   <body class="animated-bg min-h-screen relative overflow-x-hidden">
     <!-- <video src="da.mp4" loop class="absolute object-cover opacity-[0.3] w-full h-full" autoplay ></video> -->
     <!-- Floating Particles -->
+   
+<nav id="nav" class="text-white sticky top-0 z-30 overflow-hidden glass bg-black/70 shadow-md"></nav>
+
+
+
+   
     <div class="fixed inset-0 pointer-events-none">
       <div
         class="particle w-4 h-4 bg-white top-10 left-10"
@@ -471,7 +488,7 @@
         <h3 class="text-sm mb-6 font-normal text-white/80">دانو للتصوير</h3>
 
         <div
-          class="inline-flex items-center gap-2 glass rounded-full px-6 py-3 neon-glow"
+          class="inline-flex border-y-2 border-pink-900 border-x-0 items-center gap-2  rounded-lg px-6 py-3 "
         >
           <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
           <span class="text-white font-semibold">🇾🇪 إب - اليمن</span>
@@ -485,66 +502,48 @@
       ></div>
 
       <!-- Enhanced Gallery Section -->
-      <div class="mb-8 mt-[100px]">
-        <h2
-          class="text-3xl font-bold text-white text-center mb-6 flex items-center justify-center gap-2"
-        >
-          <i class="fas fa-camera-retro"></i>
-          معرض الأعمال المتطور
-        </h2>
+     
+      <div id="imgcarosul" class="min-h-screen overflow-hidden w-full flex flex-col justify-center items-center ">
 
-        <!-- Gallery Controls -->
-        <div class="flex flex-wrap justify-between items-center mb-6 gap-4">
-          <!-- Category Filters -->
-          <div class="flex flex-wrap">
-            <button class="filter-btn active" data-filter="all">
-              جميع الأعمال
-            </button>
-            <button class="filter-btn" data-filter="portraits">بورتريه</button>
-            <button class="filter-btn" data-filter="weddings">أفراح</button>
-            <button class="filter-btn" data-filter="events">مناسبات</button>
-            <button class="filter-btn" data-filter="nature">طبيعة</button>
-          </div>
+  <!-- <h2
+    class="text-2xl font-bold text-white text-center mb-6 flex items-center justify-center gap-2"
+  >
+    <i class="fas fa-camera-retro"></i>
+    معرض الأعمال
+  </h2> -->
+  <div class="carousel-container glass neon-glow relative">
+    <div class="carousel-track flex h-90 smooth-transition" id="carouselTrack">
+      
+    </div>
 
-          <!-- View Toggle -->
-          <div class="view-toggle">
-            <button class="view-btn active" data-view="grid">
-              <i class="fas fa-th"></i>
-            </button>
-            <button class="view-btn" data-view="list">
-              <i class="fas fa-list"></i>
-            </button>
-          </div>
-        </div>
+    <!-- Carousel Controls -->
+    <button
+      onclick="prevSlide()"
+      class="absolute left-4 top-1/2 transform -translate-y-1/2 glass rounded-full w-12 h-12 flex items-center justify-center text-white hover:neon-glow smooth-transition"
+    >
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button
+      onclick="nextSlide()"
+      class="absolute right-4 top-1/2 transform -translate-y-1/2 glass rounded-full w-12 h-12 flex items-center justify-center text-white hover:neon-glow smooth-transition"
+    >
+      <i class="fas fa-chevron-right"></i>
+    </button>
 
-        <!-- Gallery Grid -->
-        <div id="galleryContainer" class="gallery-grid">
-          <!-- Gallery items will be populated by JavaScript -->
-        </div>
+    <!-- Carousel Indicators -->
+    <div
+      id="carousel_indicatior"
+      class="absolute -bottom-10 left-1/2 transform -translate-x-1/2 flex gap-2"
+    >
+     
+    </div>
+  </div>
 
-        <!-- Load More Button -->
-        <div class="text-center mt-8">
-          <button
-            id="loadMoreBtn"
-            class="glass rounded-full px-8 py-3 text-white font-bold hover:scale-105 smooth-transition neon-glow"
-          >
-            <span class="load-text">تحميل المزيد</span>
-            
-            <span class="loading hidden"></span>
-          </button>
 
-          <button
-            onclick="location.href='gallery.html'"
-            class="glass rounded-full px-8 py-3 text-white font-bold hover:scale-105 smooth-transition neon-glow"
-          >
-            <span class="load-text">المعرض</span>
-            
-            <span class="loading hidden"></span>
-          </button>
-        </div>
+
+
+
       </div>
-
-
 
 
 
@@ -562,7 +561,7 @@
 
 
       <!-- Package Offers -->
-      <div class="mb-8">
+      <div id="offers" class="mb-8">
         <h2
           class="text-2xl font-bold text-white text-center mb-6 flex items-center justify-center gap-2"
         >
@@ -592,13 +591,18 @@
 
 
       <div
-        class="w-full relative flex flex-row-reverse justify-center my-9 items-center"
+        class="w-full relative  flex flex-row-reverse justify-center my-9 items-center"
       >
-        <div class="w-[10px] md:w-[320px] h-full"></div>
-        <div id="flipdown" class="flipdown left-50 w-full"></div>
+       <div>
+         
+         <div id="flipdown" class="flex flex-row-reverse  justify-center  flipdown mb-10 left-50 w-full flipdown__theme-light"></div>
+      </div>
       </div>
 
       
+      <div id="about"></div>
+
+
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 mb-8">
         <!-- زر السياسة والخصوصية -->
@@ -655,22 +659,14 @@
         </div> -->
 
       <!-- Footer -->
-      <footer class="text-center">
-        <div class="glass rounded-2xl p-6 neon-glow">
-          <p class="text-white/90 mb-2">
-            <i class="fas fa-heart text-red-400 animate-pulse"></i>
-            صلي على نبينا محمد وآله
-            <i class="fas fa-heart text-red-400 animate-pulse"></i>
-          </p>
-          <p class="text-white/70 text-sm">
-            © 2025 دانو للتصوير - جميع الحقوق محفوظة
-          </p>
-        </div>
-      </footer>
+     
     </div>
 
+     <footer id="footer" class="text-center">
+       
+      </footer>
     <!-- Enhanced Lightbox -->
-    <div id="lightbox" class="lightbox">
+    <!-- <div id="lightbox" class="lightbox">
       <div class="lightbox-content">
         <button class="lightbox-close" onclick="closeLightbox()">
           <i class="fas fa-times"></i>
@@ -695,7 +691,7 @@
           <p id="lightboxDescription" class="text-white/80"></p>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Booking Modal -->
     <div
@@ -797,6 +793,13 @@
 
 
     <script>
+
+
+
+
+
+
+
       const targetDate = new Date(2026, 1, 8); // شهر 1 هو فبراير
       const targetTimestamp = Math.floor(targetDate.getTime() / 1000);
 
@@ -811,9 +814,9 @@
 
       // Initialize the application
       function init() {
-        renderGallery();
+        // renderGallery();
         renderPackages();
-        setupEventListeners();
+        // setupEventListeners();
       }
 
       // Dark mode support
@@ -835,7 +838,35 @@
         });
 
       // Initialize the app
-      init();
+    init();
+
+    
+  window.scrollToSection = function(id) {
+  const $target = $('#' + id);
+
+  if ($target.length > 0) {
+    // تمرير ناعم إلى العنصر
+    const yOffset = -50;
+    const y = $target[0].getBoundingClientRect().top + window.pageYOffset + yOffset;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+   
+    $target
+      .addClass('highlighted-section transition-all duration-500 ease-in-out');
+
+    // إزالة التأثير بعد وقت
+    setTimeout(function () {
+      $target.removeClass('highlighted-section');
+    }, 2000);
+  }
+};
+    
+    const hash = window.location.hash;
+    if (hash) {
+      const id = hash.replace("#", "");
+      scrollToSection(id);
+    }
+
+
     </script>
   </body>
 </html>
