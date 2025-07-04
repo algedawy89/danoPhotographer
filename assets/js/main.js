@@ -71,7 +71,7 @@ $(document).ready(function () {
     });
   }
 
-Pause();
+// Pause();
 
   $(document).on('click','#menuBtn',function(){
     
